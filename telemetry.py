@@ -2,6 +2,7 @@ import random
 import datetime
 import json
 import os
+import csv
 
 def generate_time():
     # Generate a random time between 05:00:00 to 23:00:00
@@ -64,9 +65,12 @@ data = [generate_record(100401 + i) for i in range(1000)]
 output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 
-# Output as JSON string to a file
-output_file_path = os.path.join(output_dir, "telemetry_data.json")
-with open(output_file_path, 'w') as f:
-    json.dump(data, f, indent=2)
+# Output as CSV file
+output_file_path = os.path.join(output_dir, "telemetry_data.csv")
+with open(output_file_path, 'w', newline='') as f:
+    fieldnames = ["CustomerID", "StartTime", "EndTime", "AvgHR", "MaxHR", "AvgMPH", "MaxMPH", "AvgOxygen", "ElevationGain", "KCal", "Weight", "Age"]
+    writer = csv.DictWriter(f, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(data)
 
 print(f"Data has been written to {output_file_path}")

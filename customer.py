@@ -1,6 +1,6 @@
 import random
 from faker import Faker
-import json
+import csv
 
 # Initialize Faker with various locales
 locales = ['en_US', 'en_GB', 'fr_FR', 'de_DE', 'es_ES', 'it_IT', 'ja_JP', 'zh_CN', 'ar_AE', 'hi_IN']
@@ -25,10 +25,12 @@ def create_record(customer_id):
 # Create 1000 records
 records = [create_record(100001 + i) for i in range(1000)]
 
-# Write records to a JSON file
-output_file = 'output/customer_data.json'
-with open(output_file, 'w') as f:
-    json.dump(records, f, indent=4)
+# Write records to a CSV file
+output_file = 'output/customer_data.csv'
+with open(output_file, 'w', newline='') as f:
+    writer = csv.DictWriter(f, fieldnames=["CustomerID", "FirstName", "LastName", "Age", "Weight"])
+    writer.writeheader()
+    writer.writerows(records)
 
 # Display the first 10 records for verification
 for record in records[:10]:
