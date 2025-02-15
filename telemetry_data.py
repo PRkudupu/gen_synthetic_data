@@ -65,7 +65,7 @@ output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 
 # Output as JSON string to a file
-output_file_path = os.path.join(output_dir, "generated_data.json")
+output_file_path = os.path.join(output_dir, "telemetry_data.json")
 with open(output_file_path, 'w') as f:
     json.dump(data, f, indent=2)
 
